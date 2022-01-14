@@ -37,9 +37,9 @@
     "build": "next build",
     "dev": "next dev",
     "lint": "next lint",
-    "start": "next start",
+    "start": "next start -p $PORT",
     "test": "start-server-and-test test:start http://localhost:3000 test:run",
     "test:run": "cypress run",
-    "test:start": "yarn build && yarn start"
+    "test:start": "yarn build && PORT=3000 yarn start"
   }
 }
