@@ -9,13 +9,12 @@ export const middleware = async (request: NextRequest) => {
     return NextResponse.redirect(DEFAULT_LANDING_ROUTE);
   }
 
-  if (request.cookies.session) {
-    try {
-      await jsonwebtoken.verify(request.cookies.session, JWT_SECRET);
-    } catch (err) {
-      const redirect = NextResponse.redirect(DEFAULT_LANDING_ROUTE);
-      redirect.clearCookie('session');
-      return redirect;
-    }
+  if (
+    request.cookies.session &&
+    !(await jsonwebtoken.verify(request.cookies.session, JWT_SECRET))
+  ) {
+    const redirect = NextResponse.redirect(DEFAULT_LANDING_ROUTE);
+    redirect.clearCookie('session');
+    return redirect;
   }
 };
